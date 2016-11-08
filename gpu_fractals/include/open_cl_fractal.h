@@ -1,7 +1,23 @@
 #ifndef __FRACTAL_OPEN_CL
 # define __FRACTAL_OPEN_CL
 
-#pragma OPENCL EXTENSION cl_khr_fp64 : enable
+#if CONFIG_USE_DOUBLE
+
+#if defined(cl_khr_fp64)  // Khronos extension available?
+	#pragma OPENCL EXTENSION cl_khr_fp64 : enable
+	#define DOUBLE_SUPPORT_AVAILABLE
+#elif defined(cl_amd_fp64)  // AMD extension available?
+	#pragma OPENCL EXTENSION cl_amd_fp64 : enable
+	#define DOUBLE_SUPPORT_AVAILABLE
+#endif
+
+#endif 
+
+#if defined(DOUBLE_SUPPORT_AVAILABLE)
+	typedef double t_double;
+#else
+	typedef float t_double;
+#endif
 
 #include "window.h"
 

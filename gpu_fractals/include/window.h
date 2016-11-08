@@ -10,6 +10,7 @@ typedef	struct			s_window
 	SDL_Surface			*image;
 	SDL_Event			event;
 	char				*frame_buffer;
+	int					fractal_type;
 	int					width;
 	int					height;
 	int					depth;

@@ -19,9 +19,10 @@
 
 typedef struct			s_fractal_data
 {
-	cl_double				zoom;
-	cl_double				move_x;
-	cl_double				move_y;
+	float			zoom;
+	float			move_x;
+	float			move_y;
+	int					max_iter;
 	int					width;
 	int					height;
 	int					bpl;
@@ -36,6 +37,9 @@ typedef struct			s_fractal
 	int					fractal_type;
 }						t_fractal;
 
+
+void					set_default_fractal_data(t_fractal_data *data, t_window *window);
+t_fractal_data			*new_fractal_data(void);
 void					set_kernel_arguments(t_open_cl_data *cl, t_fractal_data *fractal_data);
 void					free_if(void *ptr);
 char					*file_to_string(const int fd);

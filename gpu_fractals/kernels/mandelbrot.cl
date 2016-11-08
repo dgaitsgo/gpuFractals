@@ -1,7 +1,8 @@
 __kernel void mandelbrot(__global char *output,
-double zoom,
-double move_x,
-double move_y,
+float zoom,
+float move_x,
+float move_y,
+int	max_iter,
 int	width,
 int height,
 int color_depth,
@@ -9,16 +10,13 @@ int bpl)
 {
 	int idx = get_global_id(0);
 	int	idy = get_global_id(1);
-	int i;
-
-	int max_iter, iter;
-	double pr, pi, old_re, old_im, new_re, new_im; 
+	int i, iter;
+	float pr, pi, old_re, old_im, new_re, new_im; 
 
 	new_re = 0;
 	new_im = 0;
 	old_re = 0;
 	old_im = 0;
-	max_iter = 400;
 
 	pr = 1.5 * (idx - width / 2.0) / (0.5 * zoom * width) + move_x;
 	pi = (idy - height / 2) / (0.5 * zoom * height) + move_y;

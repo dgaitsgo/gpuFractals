@@ -2,16 +2,35 @@
 
 t_fractal_data	*initialize_mandel(t_window *window)
 {
-	t_fractal_data *m = malloc(sizeof(t_fractal_data));
+	t_fractal_data *m = new_fractal_data();
+	set_default_fractal_data(m, window);
 
-	m->zoom = 1;
 	m->move_x = -0.5;
 	m->move_y = 0;
-	m->color_depth = SDL_DEPTH;
-	m->bpl = SDL_BPL;
-	m->width = SDL_WIDTH;
-	m->height = SDL_HEIGHT;
+	m->max_iter = 400;
 	return (m);
+}
+
+t_fractal_data *initialize_newton(t_window *window)
+{
+	t_fractal_data *n = new_fractal_data(); 
+	set_default_fractal_data(n, window);
+
+	n->move_x = 0;
+	n->move_y = 0;
+	n->max_iter = 100;
+	return (n);
+}
+
+t_fractal_data *initialize_julia(t_window *window)
+{
+	t_fractal_data *j = new_fractal_data(); 
+	set_default_fractal_data(j, window);
+
+	j->move_x = 0;
+	j->move_y = 0;
+	j->max_iter = 100;
+	return (j);
 }
 
 void		*initialize_fractal(t_open_cl_data *cl, t_window *window, char *arg_name)
@@ -19,17 +38,28 @@ void		*initialize_fractal(t_open_cl_data *cl, t_window *window, char *arg_name)
 	void	*fractal_data;
 	char	*kernel_source;
 	int		fd;
-	short	fractal_type;
 
 	initialize_window(window);
 	initialize_cl_consts(cl);
 
 	fd = -1;
-	if (ft_strcmp(arg_name, "mandel") == 0)
+	if (ft_strcmp(arg_name, "mandelbrot") == 0)
 	{
 		fractal_data = initialize_mandel(window);
-		fd = open("./kernels/mandel.cl", O_RDONLY);
-		fractal_type = MANDEL;
+		fd = open("./kernels/mandelbrot.cl", O_RDONLY);
+		window->fractal_type = MANDEL;
+	}
+	if (ft_strcmp(arg_name, "julia") == 0)
+	{
+		fractal_data = initialize_julia(window);
+		fd = open("./kernels/julia.cl", O_RDONLY);
+		window->fractal_type = JULIA;
+	}
+	if (ft_strcmp(arg_name, "newton") == 0)
+	{
+		fractal_data = initialize_newton(window);
+		fd = open("./kernels/newton.cl", O_RDONLY);
+		window->fractal_type = NEWTON;
 	}
 
 	if (fd <= 2)

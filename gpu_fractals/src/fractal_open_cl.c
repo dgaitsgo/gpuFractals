@@ -22,6 +22,17 @@ void	initialize_cl_consts(t_open_cl_data *cl)
 	cl->program[0] = NULL;
 }
 
+char	*get_kernel_name(int type)
+{
+	if (type == MANDEL)
+		return ("mandelbrot");
+	if (type == JULIA)
+		return ("julia");
+	if (type == NEWTON)
+		return ("newton");
+	return (NULL);
+}
+
 void	build_kernel(t_open_cl_data *cl, t_window *window, char *kernel_source)
 {
 	cl->global_work_size[0] = SDL_WIDTH;
@@ -33,7 +44,7 @@ void	build_kernel(t_open_cl_data *cl, t_window *window, char *kernel_source)
  	cl->err = clBuildProgram(cl->program[0], cl->device_count, &cl->device, NULL, NULL, NULL);
 	check_cl_error("could not build build mandel program", cl->err);
 
-	cl->kernel[0] = clCreateKernel(cl->program[0], "mandelbrot", &cl->err);
+	cl->kernel[0] = clCreateKernel(cl->program[0], get_kernel_name(window->fractal_type), &cl->err);
 	check_cl_error("could not build kernel", cl->err);
 
 	cl->queue = clCreateCommandQueue(cl->context, cl->device, 0, &cl->err);
@@ -48,13 +59,14 @@ void	set_kernel_arguments(t_open_cl_data *cl, t_fractal_data *fractal_data)
 {
 		cl->err = 0;
 		cl->err = clSetKernelArg(cl->kernel[0], 0, sizeof(cl_mem), &cl->output);
-		cl->err |= clSetKernelArg(cl->kernel[0], 1, sizeof(cl_double), &fractal_data->zoom);
-		cl->err |= clSetKernelArg(cl->kernel[0], 2, sizeof(cl_double), &fractal_data->move_x);
-		cl->err |= clSetKernelArg(cl->kernel[0], 3, sizeof(cl_double), &fractal_data->move_y);
-		cl->err |= clSetKernelArg(cl->kernel[0], 4, sizeof(int), &fractal_data->width);
-		cl->err |= clSetKernelArg(cl->kernel[0], 5, sizeof(int), &fractal_data->height);
-		cl->err |= clSetKernelArg(cl->kernel[0], 6, sizeof(int), &fractal_data->color_depth);
-		cl->err |= clSetKernelArg(cl->kernel[0], 7, sizeof(int), &fractal_data->bpl);
+		cl->err |= clSetKernelArg(cl->kernel[0], 1, sizeof(float), &fractal_data->zoom);
+		cl->err |= clSetKernelArg(cl->kernel[0], 2, sizeof(float), &fractal_data->move_x);
+		cl->err |= clSetKernelArg(cl->kernel[0], 3, sizeof(float), &fractal_data->move_y);
+		cl->err |= clSetKernelArg(cl->kernel[0], 4, sizeof(int), &fractal_data->max_iter);
+		cl->err |= clSetKernelArg(cl->kernel[0], 5, sizeof(int), &fractal_data->width);
+		cl->err |= clSetKernelArg(cl->kernel[0], 6, sizeof(int), &fractal_data->height);
+		cl->err |= clSetKernelArg(cl->kernel[0], 7, sizeof(int), &fractal_data->color_depth);
+		cl->err |= clSetKernelArg(cl->kernel[0], 8, sizeof(int), &fractal_data->bpl);
 		check_cl_error("failed to set kernel args", cl->err);
 }
 
