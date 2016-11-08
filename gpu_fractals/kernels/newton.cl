@@ -17,8 +17,8 @@ int bpl)
 	iter = 0;
 	new_re = 1.5 * (idx - width / 2) / (0.5 * zoom * width) + move_x;
 	new_im = (idy - height / 2) / (0.5 * zoom * height) + move_y;
-	temp = 3000;
-	while (temp > 0.000001 && i++ < max_iter)
+	temp = 1.0;
+	while (temp > 0.000001 && iter++ < max_iter)
 	{
 		old_re = new_re;
 		old_im = new_im;
