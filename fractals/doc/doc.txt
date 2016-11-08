@@ -1,0 +1,4 @@
+limitations:
+
+- not sure if it will work on windows
+- does not support multiple gpus
