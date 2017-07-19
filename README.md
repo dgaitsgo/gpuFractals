@@ -1,1 +1,1 @@
-![alt tag](https://github.com/dgaitsgo/projects/blob/master/gpu_fractals/images/Screen%20Shot%202016-05-08%20at%2011.22.34%20PM.png)
+![alt tag](https://github.com/dgaitsgo/gpuFractals/images/ss.png)
