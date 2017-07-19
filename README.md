@@ -1,10 +1,3 @@
-WebGL demos:
-
-Volume Rendering
-Physical-Based Rendering
-Noise
-Connectome
-
 ![Screen shot](https://github.com/dgaitsgo/gpuFractals/blob/master/images/ss.png)
 
 Fractals are magnificent self-similar patterns who reveal the inner dimensions of 1-dimensional shapes.
