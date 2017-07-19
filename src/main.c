@@ -78,7 +78,7 @@ int main(int argc, char **argv)
 	t_window		*window;
 
 	if (argc != 2)
-		fractal_error("usage : ./fractal [mandel]");
+		fractal_error("usage : ./fractal [mandelbrot][newton][julia]");
 
 	cl		= malloc(sizeof(t_open_cl_data));
 	window	= malloc(sizeof(t_window));
