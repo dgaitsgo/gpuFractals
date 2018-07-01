@@ -1,7 +1,7 @@
 ![Screen shot](https://github.com/dgaitsgo/gpuFractals/blob/master/images/ss.png)
 
 Fractals are magnificent self-similar patterns who reveal the inner dimensions of 1-dimensional shapes.
-Here we render them on the GPU for speed and precision to explore patterns those patterns to deeper depths.
+Here we render them on the GPU for speed and precision to explore those patterns to deeper depths.
 
 #### Compatability
 
